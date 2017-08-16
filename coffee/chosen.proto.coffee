@@ -2,12 +2,15 @@ class @Chosen extends AbstractChosen
 
   setup: ->
     @current_selectedIndex = @form_field.selectedIndex
+    @is_rtl = @form_field.hasClassName "chosen-rtl"
 
   set_default_values: ->
     super()
 
     # HTML Templates
-    @no_results_temp = new Template(this.get_no_results_html('#{terms}'))
+    @single_temp = new Template('<a class="chosen-single chosen-default"><span>#{default}</span><div><b></b></div></a><div class="chosen-drop"><div class="chosen-search"><input type="text" autocomplete="off" /></div><ul class="chosen-results"></ul></div>')
+    @multi_temp = new Template('<ul class="chosen-choices"><li class="search-field"><input type="text" value="#{default}" class="default" autocomplete="off" style="width:25px;" /></li></ul><div class="chosen-drop"><ul class="chosen-results"></ul></div>')
+    @no_results_temp = new Template('<li class="no-results">' + @results_none_found + ' "<span>#{terms}</span>"</li>')
 
   set_up_html: ->
     container_classes = ["chosen-container"]
@@ -17,19 +20,12 @@ class @Chosen extends AbstractChosen
 
     container_props =
       'class': container_classes.join ' '
+      'style': "width: #{this.container_width()};"
       'title': @form_field.title
 
     container_props.id = @form_field.id.replace(/[^\w]/g, '_') + "_chosen" if @form_field.id.length
 
-    @container = new Element('div', container_props)
-
-    # CSP without 'unsafe-inline' doesn't allow setting the style attribute directly
-    @container.setStyle(width: this.container_width())
-
-    if @is_multiple
-      @container.update this.get_multi_html()
-    else
-      @container.update this.get_single_html()
+    @container = if @is_multiple then new Element('div', container_props).update( @multi_temp.evaluate({ "default": @default_text}) ) else new Element('div', container_props).update( @single_temp.evaluate({ "default":@default_text }) )
 
     @form_field.hide().insert({ after: @container })
     @dropdown = @container.down('div.chosen-drop')
@@ -55,8 +51,8 @@ class @Chosen extends AbstractChosen
     @form_field.fire("chosen:ready", {chosen: this})
 
   register_observers: ->
-    @container.observe "touchstart", (evt) => this.container_mousedown(evt)
-    @container.observe "touchend", (evt) => this.container_mouseup(evt)
+    @container.observe "touchstart", (evt) => this.container_mousedown(evt); evt.preventDefault()
+    @container.observe "touchend", (evt) => this.container_mouseup(evt); evt.preventDefault()
 
     @container.observe "mousedown", (evt) => this.container_mousedown(evt)
     @container.observe "mouseup", (evt) => this.container_mouseup(evt)
@@ -76,7 +72,7 @@ class @Chosen extends AbstractChosen
     @form_field.observe "chosen:updated", (evt) => this.results_update_field(evt)
     @form_field.observe "chosen:activate", (evt) => this.activate_field(evt)
     @form_field.observe "chosen:open", (evt) => this.container_mousedown(evt)
-    @form_field.observe "chosen:close", (evt) => this.close_field(evt)
+    @form_field.observe "chosen:close", (evt) => this.input_blur(evt)
 
     @search_field.observe "blur", (evt) => this.input_blur(evt)
     @search_field.observe "keyup", (evt) => this.keyup_checker(evt)
@@ -93,9 +89,7 @@ class @Chosen extends AbstractChosen
   destroy: ->
     @container.ownerDocument.stopObserving "click", @click_test_action
 
-    for event in ['chosen:updated', 'chosen:activate', 'chosen:open', 'chosen:close']
-      @form_field.stopObserving(event)
-
+    @form_field.stopObserving()
     @container.stopObserving()
     @search_results.stopObserving()
     @search_field.stopObserving()
@@ -115,38 +109,31 @@ class @Chosen extends AbstractChosen
     @form_field.show()
 
   search_field_disabled: ->
-    @is_disabled = @form_field.disabled || @form_field.up('fieldset')?.disabled || false
-
-    if @is_disabled
+    @is_disabled = @form_field.disabled
+    if(@is_disabled)
       @container.addClassName 'chosen-disabled'
+      @search_field.disabled = true
+      @selected_item.stopObserving "focus", @activate_action if !@is_multiple
+      this.close_field()
     else
       @container.removeClassName 'chosen-disabled'
-
-    @search_field.disabled = @is_disabled
-
-    unless @is_multiple
-      @selected_item.stopObserving 'focus', this.activate_field
-
-    if @is_disabled
-      this.close_field()
-    else unless @is_multiple
-      @selected_item.observe 'focus', this.activate_field
+      @search_field.disabled = false
+      @selected_item.observe "focus", @activate_action if !@is_multiple
 
   container_mousedown: (evt) ->
-    return if @is_disabled
+    if !@is_disabled
+      if evt and evt.type is "mousedown" and not @results_showing
+        evt.stop()
 
-    if evt and evt.type in ['mousedown', 'touchstart'] and not @results_showing
-      evt.preventDefault()
+      if not (evt? and evt.target.hasClassName "search-choice-close")
+        if not @active_field
+          @search_field.clear() if @is_multiple
+          @container.ownerDocument.observe "click", @click_test_action
+          this.results_show()
+        else if not @is_multiple and evt and (evt.target is @selected_item || evt.target.up("a.chosen-single"))
+          this.results_toggle()
 
-    if not (evt? and evt.target.hasClassName "search-choice-close")
-      if not @active_field
-        @search_field.clear() if @is_multiple
-        @container.ownerDocument.observe "click", @click_test_action
-        this.results_show()
-      else if not @is_multiple and evt and (evt.target is @selected_item || evt.target.up("a.chosen-single"))
-        this.results_toggle()
-
-      this.activate_field()
+        this.activate_field()
 
   container_mouseup: (evt) ->
     this.results_reset(evt) if evt.target.nodeName is "ABBR" and not @is_disabled
@@ -172,15 +159,12 @@ class @Chosen extends AbstractChosen
 
     this.show_search_field_default()
     this.search_field_scale()
-    @search_field.blur()
 
   activate_field: ->
-    return if @is_disabled
-
     @container.addClassName "chosen-container-active"
     @active_field = true
 
-    @search_field.value = this.get_search_field_value()
+    @search_field.value = @search_field.value
     @search_field.focus()
 
   test_active_click: (evt) ->
@@ -245,7 +229,7 @@ class @Chosen extends AbstractChosen
     @results_showing = true
 
     @search_field.focus()
-    @search_field.value = this.get_search_field_value()
+    @search_field.value = @search_field.value
 
     this.winnow_results()
     @form_field.fire("chosen:showing_dropdown", {chosen: this})
@@ -275,7 +259,7 @@ class @Chosen extends AbstractChosen
       @form_field_label = $$("label[for='#{@form_field.id}']").first() #next check for a for=#{id}
 
     if @form_field_label?
-      @form_field_label.observe "click", this.label_click_handler
+      @form_field_label.observe "click", (evt) => if @is_multiple then this.container_mousedown(evt) else this.activate_field()
 
   show_search_field_default: ->
     if @is_multiple and this.choices_count() < 1 and not @active_field
@@ -318,12 +302,9 @@ class @Chosen extends AbstractChosen
 
   choice_destroy: (link) ->
     if this.result_deselect link.readAttribute("rel")
-      if @active_field
-        @search_field.focus()
-      else
-        this.show_search_field_default()
+      this.show_search_field_default()
 
-      this.results_hide() if @is_multiple and this.choices_count() > 0 and this.get_search_field_value().length < 1
+      this.results_hide() if @is_multiple and this.choices_count() > 0 and @search_field.value.length < 1
 
       link.up('li').remove()
 
@@ -335,7 +316,7 @@ class @Chosen extends AbstractChosen
     this.single_set_selected_text()
     this.show_search_field_default()
     this.results_reset_cleanup()
-    this.trigger_form_field_change()
+    @form_field.simulate("change") if typeof Event.simulate is 'function'
     this.results_hide() if @active_field
 
   results_reset_cleanup: ->
@@ -370,11 +351,10 @@ class @Chosen extends AbstractChosen
       else
         this.single_set_selected_text(this.choice_label(item))
 
-      unless @is_multiple && (!@hide_results_on_select || (evt.metaKey or evt.ctrlKey))
-        this.results_hide()
-        this.show_search_field_default()
+      this.results_hide() unless (evt.metaKey or evt.ctrlKey) and @is_multiple
+      this.show_search_field_default()
 
-      this.trigger_form_field_change() if @is_multiple || @form_field.selectedIndex != @current_selectedIndex
+      @form_field.simulate("change") if typeof Event.simulate is 'function' && (@is_multiple || @form_field.selectedIndex != @current_selectedIndex)
       @current_selectedIndex = @form_field.selectedIndex
 
       evt.preventDefault()
@@ -402,7 +382,7 @@ class @Chosen extends AbstractChosen
       this.result_clear_highlight()
       this.winnow_results() if @results_showing
 
-      this.trigger_form_field_change()
+      @form_field.simulate("change") if typeof Event.simulate is 'function'
       this.search_field_scale()
       return true
     else
@@ -413,14 +393,8 @@ class @Chosen extends AbstractChosen
     @selected_item.down("span").insert { after: "<abbr class=\"search-choice-close\"></abbr>" } unless @selected_item.down("abbr")
     @selected_item.addClassName("chosen-single-with-deselect")
 
-  get_search_field_value: ->
-    @search_field.value
-
   get_search_text: ->
-    this.escape_html this.get_search_field_value().strip()
-
-  escape_html: (text) ->
-    text.escapeHTML()
+    @search_field.value.strip().escapeHTML()
 
   winnow_results_set_highlight: ->
     if not @is_multiple
@@ -479,46 +453,55 @@ class @Chosen extends AbstractChosen
     @pending_backstroke.removeClassName("search-choice-focus") if @pending_backstroke
     @pending_backstroke = null
 
+  keydown_checker: (evt) ->
+    stroke = evt.which ? evt.keyCode
+    this.search_field_scale()
+
+    this.clear_backstroke() if stroke != 8 and this.pending_backstroke
+
+    switch stroke
+      when 8
+        @backstroke_length = this.search_field.value.length
+        break
+      when 9
+        this.result_select(evt) if this.results_showing and not @is_multiple
+        @mouse_on_container = false
+        break
+      when 13
+        evt.preventDefault() if this.results_showing
+        break
+      when 32
+        evt.preventDefault() if @disable_search
+        break
+      when 38
+        evt.preventDefault()
+        this.keyup_arrow()
+        break
+      when 40
+        evt.preventDefault()
+        this.keydown_arrow()
+        break
+
   search_field_scale: ->
-    return unless @is_multiple
+    if @is_multiple
+      h = 0
+      w = 0
 
-    style_block =
-      position: 'absolute'
-      left: '-1000px'
-      top: '-1000px'
-      display: 'none'
-      whiteSpace: 'pre'
+      style_block = "position:absolute; left: -1000px; top: -1000px; display:none;"
+      styles = ['font-size','font-style', 'font-weight', 'font-family','line-height', 'text-transform', 'letter-spacing']
 
-    styles = ['fontSize', 'fontStyle', 'fontWeight', 'fontFamily', 'lineHeight', 'textTransform', 'letterSpacing']
+      for style in styles
+        style_block += style + ":" + @search_field.getStyle(style) + ";"
 
-    for style in styles
-      style_block[style] = @search_field.getStyle(style)
+      div = new Element('div', { 'style' : style_block }).update(@search_field.value.escapeHTML())
+      document.body.appendChild(div)
 
-    div = new Element('div').update(this.escape_html(this.get_search_field_value()))
-    # CSP without 'unsafe-inline' doesn't allow setting the style attribute directly
-    div.setStyle(style_block)
-    document.body.appendChild(div)
+      w = Element.measure(div, 'width') + 25
+      div.remove()
 
-    width = div.measure('width') + 25
-    div.remove()
+      f_width = @container.getWidth()
 
-    container_width = @container.getWidth()
+      if( w > f_width-10 )
+        w = f_width - 10
 
-    width = Math.min(container_width - 10, width)
-
-    @search_field.setStyle(width: width + 'px')
-
-  trigger_form_field_change:  ->
-    triggerHtmlEvent @form_field, 'input'
-    triggerHtmlEvent @form_field, 'change'
-
-  triggerHtmlEvent = (element, eventType) ->
-    if element.dispatchEvent  # Modern way:
-      try
-        evt = new Event(eventType, bubbles: true, cancelable: true)
-      catch
-        evt = document.createEvent('HTMLEvents')
-        evt.initEvent(eventType, true, true);
-      element.dispatchEvent(evt)
-    else # Old IE:
-      element.fireEvent("on#{eventType}", document.createEventObject());
+      @search_field.setStyle({'width': w + 'px'})

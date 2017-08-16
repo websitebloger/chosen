@@ -11,24 +11,12 @@ http://websitebloger.github.io/chosen/
 For **downloads**, see:
 https://github.com/websitebloger/chosen/releases/
 
-### Package managers
+### Bower Installation
 
-Chosen is available through [Bower](https://bower.io/) and [npm](https://www.npmjs.com),
-_however, the package names are not the same_.
+Chosen is available for Bower installation:
+`bower install chosen`
 
-To install with Bower:
-
-```
-bower install chosen
-```
-
-To install with npm:
-
-```
-npm install chosen-js
-```
-
-The compiled files for these packages are automatically generated and stored in a [2nd Chosen repository](https://github.com/websitebloger/chosen-package). No pull requests will be accepted to that repository.
+The compiled files for the Bower package are automatically generated and stored in a [2nd Chosen repository](https://github.com/websitebloger/bower-chosen). No pull requests will be accepted to that repository.
 
 ### Contributing to this project
 

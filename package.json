@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/websitebloger/chosen.git"
+    "url": "https://github.com/harvesthq/chosen.git"
   },
   "engines": {
     "node": ">=0.4.0"
@@ -59,29 +59,21 @@
     }
   ],
   "license": "MIT",
-  "homepage": "https://websitebloger.github.io/chosen/",
-  "bugs": "https://github.com/websitebloger/chosen/issues",
+  "homepage": "https://harvesthq.github.io/chosen/",
+  "bugs": "https://github.com/harvesthq/chosen/issues",
   "_extra": {
     "title": "Chosen",
     "license": {
       "type": "MIT",
-      "url": "https://github.com/websitebloger/chosen/blob/master/LICENSE.md"
+      "url": "https://github.com/harvesthq/chosen/blob/master/LICENSE.md"
     },
     "links": {
-      "download": "https://github.com/websitebloger/chosen/releases",
-      "docs": "https://websitebloger.github.io/chosen/"
+      "download": "https://github.com/harvesthq/chosen/releases",
+      "docs": "https://harvesthq.github.io/chosen/"
     },
-    "main": [
-      "chosen.jquery.js",
-      "chosen.css"
-    ],
     "files": [
       "chosen.jquery.js",
-      "chosen.jquery.min.js",
-      "chosen.proto.js",
-      "chosen.proto.min.js",
       "chosen.css",
-      "chosen.min.css",
       "chosen-sprite@2x.png",
       "chosen-sprite.png"
     ]

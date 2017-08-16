@@ -10,15 +10,15 @@ if [ $CURRENT_BRANCH != 'master' ] ; then
 fi
 
 CHOSEN_VERSION=`git tag --sort=v:refname | tail -1`
-GITHUB_URL=https://pfiller:${GH_TOKEN}@github.com/websitebloger/chosen-package.git
+GITHUB_URL=https://pfiller:${GH_TOKEN}@github.com/harvesthq/chosen-package.git
 
 git clone $GITHUB_URL
 rm -rf chosen-package/*
-cp README.md public/*.json public/*.png public/*.js public/*.css chosen-package/
+cp README.md public/*.json public/*.png public/chosen.jquery.js public/chosen.css chosen-package/
 cp package-travis.yml chosen-package/.travis.yml
 cd chosen-package
 
-git config user.email "samuelbetio@gmail.com"
+git config user.email "chosen@getharvest.com"
 git config user.name "chosen-package"
 
 LATEST_VERSION=`git tag --sort=v:refname | tail -1`
@@ -38,4 +38,4 @@ fi
 git push origin master
 git push origin --tags
 
-echo "Chosen published to websitebloger/chosen-package"
+echo "Chosen published to harvesthq/chosen-package"

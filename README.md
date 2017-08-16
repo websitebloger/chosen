@@ -6,10 +6,10 @@ Chosen is a library for making long, unwieldy select boxes more user friendly.
 - Prototype support: 1.7+
 
 For **documentation**, usage, and examples, see:
-http://websitebloger.github.io/chosen/
+http://harvesthq.github.io/chosen/
 
 For **downloads**, see:
-https://github.com/websitebloger/chosen/releases/
+https://github.com/harvesthq/chosen/releases/
 
 ### Package managers
 
@@ -28,7 +28,7 @@ To install with npm:
 npm install chosen-js
 ```
 
-The compiled files for these packages are automatically generated and stored in a [2nd Chosen repository](https://github.com/websitebloger/chosen-package). No pull requests will be accepted to that repository.
+The compiled files for these packages are automatically generated and stored in a [2nd Chosen repository](https://github.com/harvesthq/chosen-package). No pull requests will be accepted to that repository.
 
 ### Contributing to this project
 
@@ -44,4 +44,4 @@ We welcome all to participate in making Chosen the best software it can be. The 
 - Concept and development by [Patrick Filler](http://patrickfiller.com) for [Harvest](http://getharvest.com/).
 - Design and CSS by [Matthew Lettini](http://matthewlettini.com/)
 - Repository maintained by [@pfiller](http://github.com/pfiller), [@kenearley](http://github.com/kenearley), [@stof](http://github.com/stof), [@koenpunt](http://github.com/koenpunt), and [@tjschuck](http://github.com/tjschuck).
-- Chosen includes [contributions by many fine folks](https://github.com/websitebloger/chosen/contributors).
+- Chosen includes [contributions by many fine folks](https://github.com/harvesthq/chosen/contributors).

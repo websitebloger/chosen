@@ -14,11 +14,11 @@ GITHUB_URL=https://pfiller:${GH_TOKEN}@github.com/websitebloger/chosen-package.g
 
 git clone $GITHUB_URL
 rm -rf chosen-package/*
-cp README.md public/*.json public/*.png public/*.js public/*.css chosen-package/
+cp README.md public/*.json public/*.png public/chosen.jquery.js public/chosen.css chosen-package/
 cp package-travis.yml chosen-package/.travis.yml
 cd chosen-package
 
-git config user.email "samuelbetio@gmail.com"
+git config user.email "chosen@getharvest.com"
 git config user.name "chosen-package"
 
 LATEST_VERSION=`git tag --sort=v:refname | tail -1`

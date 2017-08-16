@@ -22,12 +22,11 @@ describe "Events", ->
     document.addEventListener 'change', -> event_sequence.push 'change'
 
     container = div.down(".chosen-container")
-    simulant.fire(container, "mousedown") # open the drop
+    container.simulate("mousedown") # open the drop
     expect(container.hasClassName("chosen-container-active")).toBe true
 
     #select an item
-    result = container.select(".active-result").last()
-    simulant.fire(result, "mouseup")
+    container.select(".active-result").last().simulate("mouseup")
 
     expect(event_sequence).toEqual ['input', 'change']
     div.remove()

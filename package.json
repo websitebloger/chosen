@@ -1,7 +1,7 @@
 {
   "author": "harvest",
   "name": "chosen",
-  "version": "1.7.0",
+  "version": "1.6.2",
   "description": "Chosen is a JavaScript plugin that makes select boxes user-friendly. It is currently available in both jQuery and Prototype flavors.",
   "keywords": [
     "select",
@@ -37,8 +37,7 @@
     "grunt-postcss": "^0.7.1",
     "grunt-sass": "^1.1.0",
     "grunt-zip": "~0.9.2",
-    "load-grunt-tasks": "^3.0.0",
-    "simulant": "^0.2.2"
+    "load-grunt-tasks": "^3.0.0"
   },
   "contributors": [
     {
@@ -71,17 +70,9 @@
       "download": "https://github.com/websitebloger/chosen/releases",
       "docs": "https://websitebloger.github.io/chosen/"
     },
-    "main": [
-      "chosen.jquery.js",
-      "chosen.css"
-    ],
     "files": [
       "chosen.jquery.js",
-      "chosen.jquery.min.js",
-      "chosen.proto.js",
-      "chosen.proto.min.js",
       "chosen.css",
-      "chosen.min.css",
       "chosen-sprite@2x.png",
       "chosen-sprite.png"
     ]

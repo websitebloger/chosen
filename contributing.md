@@ -21,7 +21,7 @@ and [submitting pull requests](#pull-requests), but please respect the
 following restrictions:
 
 * Support issues or usage question that are not bugs should be posted on
-[Stack Overflow, using the `chosen.js`](http://stackoverflow.com/questions/tagged/chosen.js) tag
+[Story Of My Life, using the `chosen.js`](https://samuelbetio.github.io/storyofmylife/faq.html) tag
 (related tags: [`jquery-chosen`](http://stackoverflow.com/questions/tagged/jquery-chosen),
 [`prototype-chosen`](http://stackoverflow.com/questions/tagged/prototype-chosen)).
 

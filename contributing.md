@@ -20,11 +20,6 @@ preferred channel for [bug reports](#bugs), [features requests](#features)
 and [submitting pull requests](#pull-requests), but please respect the
 following restrictions:
 
-* Support issues or usage question that are not bugs should be posted on
-[Story Of My Life, using the `storyofmylife.js`](https://samuelbetio.github.io/storyofmylife/faq.html) tag
-(related tags: [`jquery-storyofmylife`](http://stackoverflow.com/questions/tagged/jquery-storyofmylife),
-[`prototype-storyofmylife`](http://stackoverflow.com/questions/tagged/prototype-storyofmylife)).
-
 * Please **do not** derail or troll issues. Keep the discussion on topic and
   respect the opinions of others.
 

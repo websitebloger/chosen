@@ -4,7 +4,7 @@ Please take a moment to review this document in order to make the contribution
 process easy and effective for everyone involved.
 
 Following these guidelines will help us get back to you more quickly, and will
-show that you care about making Chosen better just like we do. In return, we'll
+show that you care about making storyofmylife better just like we do. In return, we'll
 do our best to respond to your issue or pull request as soon as possible with
 the same respect.
 

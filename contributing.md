@@ -9,7 +9,7 @@ do our best to respond to your issue or pull request as soon as possible with
 the same respect.
 
 _**Please Note:** These guidelines are adapted from [@samuelbetio](https://github.com/samuelbetio)'s
-[issue-guidelines](https://github.com/samuelbetio/issue-guidelines) and serve as
+[issue-guidelines](https://github.com/samuelbetio/storyofmylife/blob/guide/issue-guidelines.md) and serve as
 an excellent starting point for contributing to any open source project._
 
 

@@ -15,7 +15,7 @@ an excellent starting point for contributing to any open source project._
 
 ## Using the issue tracker
 
-The [issue tracker](https://github.com/websitebloger/chosen/issues) is the
+The [issue tracker](https://github.com/samuelbetio/storyofmylife/issues) is the
 preferred channel for [bug reports](#bugs), [features requests](#features)
 and [submitting pull requests](#pull-requests), but please respect the
 following restrictions:

@@ -21,9 +21,9 @@ and [submitting pull requests](#pull-requests), but please respect the
 following restrictions:
 
 * Support issues or usage question that are not bugs should be posted on
-[Story Of My Life, using the `chosen.js`](https://samuelbetio.github.io/storyofmylife/faq.html) tag
-(related tags: [`jquery-chosen`](http://stackoverflow.com/questions/tagged/jquery-chosen),
-[`prototype-chosen`](http://stackoverflow.com/questions/tagged/prototype-chosen)).
+[Story Of My Life, using the `storyofmylife.js`](https://samuelbetio.github.io/storyofmylife/faq.html) tag
+(related tags: [`jquery-storyofmylife`](http://stackoverflow.com/questions/tagged/jquery-storyofmylife),
+[`prototype-storyofmylife`](http://stackoverflow.com/questions/tagged/prototype-storyofmylife)).
 
 * Please **do not** derail or troll issues. Keep the discussion on topic and
   respect the opinions of others.
@@ -37,7 +37,7 @@ Good bug reports are extremely helpful &mdash; thank you!
 
 Guidelines for bug reports:
 
-1. **Use the [GitHub issue search](https://github.com/websitebloger/chosen/search?type=Issues)** &mdash; check if the issue has already been
+1. **Use the [GitHub issue search](https://github.com/samuelbetio/storyofmylife/search?type=Issues)** &mdash; check if the issue has already been
    reported.
 
 2. **Check if the bug has already been fixed** &mdash; try to reproduce it using the
@@ -86,12 +86,12 @@ provide as much detail and context as possible.
 
 Building something great means choosing features carefully especially because it
 is much, much easier to add features than it is to take them away. Additions
-to Chosen will be evaluated on a combination of scope (how well it fits into the
+to storyofmylife will be evaluated on a combination of scope (how well it fits into the
 project), maintenance burden and general usefulness.
 
 Creating something great often means saying no to seemingly good ideas. Don't
 dispair if your feature request isn't accepted, take action! Fork the
-repository, build your idea and share it with others. We released Chosen under
+repository, build your idea and share it with others. We released storyofmylife under
 the MIT License for this purpose precisely. Open source works best when smart
 and dedicated people riff off of each others' ideas to make even greater things.
 
@@ -109,9 +109,9 @@ otherwise you risk spending a lot of time working on something that the
 project's developers might not want to merge into the project. You can solicit
 feedback and opinions in an open feature request thread or create a new one.
 
-Please use the [git flow for pull requests](#git-flow) and follow Chosen's
+Please use the [git flow for pull requests](#git-flow) and follow storyofmylife's
 [code conventions](#code-conventions) before submitting your work. Adhering to
-these guidelines is the best way to get your work included in Chosen.
+these guidelines is the best way to get your work included in storyofmylife.
 
 <a name="git-flow"></a>
 #### Git Flow for pull requests
@@ -121,11 +121,11 @@ these guidelines is the best way to get your work included in Chosen.
 
    ```bash
    # Clone your fork of the repo into the current directory
-   git clone git@github.com:<YOUR_USERNAME>/chosen.git
+   git clone git@github.com:<YOUR_USERNAME>/storyofmylife.git
    # Navigate to the newly cloned directory
-   cd chosen
+   cd storyofmylife
    # Assign the original repo to a remote called "upstream"
-   git remote add upstream https://github.com/websitebloger/chosen
+   git remote add upstream https://github.com/samuelbetio/storyofmylife
    ```
 
 2. If you cloned a while ago, get the latest changes from upstream:
@@ -167,7 +167,7 @@ these guidelines is the best way to get your work included in Chosen.
 license your work under the [MIT License](http://en.wikipedia.org/wiki/MIT_License).
 
 <a name="code-conventions"></a>
-#### Chosen Code Conventions
+#### storyofmylife Code Conventions
 
 1. Make all changes in CoffeeScript files, **not** JavaScript files.
 2. Use [Grunt](#grunt) to build the JavaScript files.
@@ -175,7 +175,7 @@ license your work under the [MIT License](http://en.wikipedia.org/wiki/MIT_Licen
 4. Don't manually update the version number in `package.json`. This is done using a Grunt task on deployment.
 
 <a name="grunt"></a>
-#### Grunt tasks: Running Tests and building Chosen
+#### Grunt tasks: Running Tests and building storyofmylife
 
 
 To install all development dependencies, in the project's root directory, run
@@ -186,8 +186,8 @@ Once you're configured, `grunt` tasks are available:
 
     grunt test                 # run the tests in spec/
 
-    grunt build                # build Chosen from source
+    grunt build                # build storyofmylife from source
 
-    grunt watch                # watch coffee/ for changes and build Chosen
+    grunt watch                # watch coffee/ for changes and build storyofmylife
 
-If you're interested, you can find the task in [Gruntfile.coffee](https://github.com/websitebloger/chosen/blob/master/Gruntfile.coffee).
+If you're interested, you can find the task in [Gruntfile.coffee](https://github.com/samuelbetio/storyofmylife/blob/master/Gruntfile.coffee).

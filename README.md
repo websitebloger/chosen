@@ -1,4 +1,4 @@
-# Chosen
+#Best Chosen for you
 
 Chosen is a library for making long, unwieldy select boxes more user friendly.
 
@@ -30,7 +30,7 @@ npm install chosen-js
 
 The compiled files for these packages are automatically generated and stored in a [2nd Chosen repository](https://github.com/websitebloger/chosen-package). No pull requests will be accepted to that repository.
 
-### Contributing to this project
+### Project Contributions
 
 We welcome all to participate in making Chosen the best software it can be. The repository is maintained by only a few people, but has accepted contributions from over 50 authors after reviewing hundreds of pull requests related to thousands of issues. You can help reduce the maintainers' workload (and increase your chance of having an accepted contribution to Chosen) by following the
 [guidelines for contributing](contributing.md).
@@ -39,7 +39,7 @@ We welcome all to participate in making Chosen the best software it can be. The 
 * [Feature requests](contributing.md#features)
 * [Pull requests](contributing.md#pull-requests)
 
-### Chosen Credits
+### Chosen Credit
 
 - Concept and development by [Patrick Filler](http://patrickfiller.com) for [Harvest](http://getharvest.com/).
 - Design and CSS by [Matthew Lettini](http://matthewlettini.com/)

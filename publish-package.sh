@@ -18,7 +18,7 @@ cp README.md public/*.json public/*.png public/*.js public/*.css chosen-package/
 cp package-travis.yml chosen-package/.travis.yml
 cd chosen-package
 
-git config user.email "samuelbetio@gmail.com"
+git config user.email "chosen@getharvest.com"
 git config user.name "chosen-package"
 
 LATEST_VERSION=`git tag --sort=v:refname | tail -1`
